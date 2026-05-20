@@ -5,22 +5,22 @@
 (generate_opam_files true)
 
 (source
- (github username/reponame))
+ (github flight-earth/reduced-latitude))
 
-(authors "Author Name <author@example.com>")
+(authors "Phil de Joux <phil.dejoux@blockscope.com>")
 
-(maintainers "Maintainer Name <maintainer@example.com>")
+(maintainers "Phil de Joux")
 
-(license LICENSE)
+(license "MPL-2.0")
 
 (documentation https://url/to/documentation)
 
 (package
  (name reduced-latitude)
- (synopsis "A short synopsis")
- (description "A longer description")
+ (synopsis "Geodesy problems and their solutions")
+ (description "Solutions to the direct or forward and inverse or reverse geodesy problems, using Haversines and Vincenty's method.")
  (depends ocaml)
  (tags
-  ("add topics" "to describe" your project)))
+  ("earth" "geodesy" "ellipsoid" "haversines" "Vincenty" "latitude" "longitude" "azimuth" "distance")))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
