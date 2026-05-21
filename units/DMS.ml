@@ -123,8 +123,118 @@ module DMS = struct
   let abs_diff_dms_180 (y : dms) : dms -> dms =
     abs_diff_dms (rotate { deg = 180; min = 0; sec = 0.0 } y)
 
+  let print_dms_expect (x : dms) =
+    Printf.printf "%d°%d′%.14f″\n" x.deg x.min x.sec
+
+  let print_deg_expect (x : deg) = Printf.printf "%.30f°\n" x.deg
+
   let%expect_test _ =
     let x = from_deg { deg = -169.06666666622118 } in
-    Printf.printf "%d°%d′%.14f″\n" x.deg x.min x.sec;
+    print_dms_expect x;
     [%expect {|-169°3′59.99999839625161″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 1; min = 0; sec = 0.0 });
+    [%expect {|1°0′0.00000000000000″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 0; min = 1; sec = 0.0 });
+    [%expect {|0°1′0.00000000000000″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 0; min = 0; sec = 1.0 });
+    [%expect {|0°0′1.00000000000000″|}]
+
+  let%expect_test _ =
+    print_deg_expect (normalize_deg { deg = 361.0 });
+    [%expect {|1.000000000000000000000000000000°|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 361; min = 0; sec = 0.0 });
+    [%expect {|1°0′0.00000000000000″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms (from_deg { deg = 361.0 }));
+    [%expect {|1°0′0.00000000000000″|}]
+
+  let%expect_test _ =
+    print_deg_expect (normalize_deg { deg = -1.0 });
+    [%expect {|359.000000000000000000000000000000°|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = -1; min = 0; sec = 0.0 });
+    [%expect {|359°0′0.00000000000000″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms (from_deg { deg = -1.0 }));
+    [%expect {|359°0′0.00000000000000″|}]
+
+  let%expect_test _ =
+    print_dms_expect (from_deg (normalize_deg { deg = -1.0 /. 60.0 }));
+    [%expect {|359°59′0.00000000005457″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 0; min = -1; sec = 0.0 });
+    [%expect {|359°59′0.00000000005457″|}]
+
+  let%expect_test _ =
+    print_dms_expect (from_deg (normalize_deg { deg = -1.0 /. 3600.0 }));
+    [%expect {|359°59′58.99999999993270″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 0; min = 0; sec = -1.0 });
+    [%expect {|359°59′58.99999999993270″|}]
+
+  let%expect_test _ =
+    print_dms_expect (from_deg (normalize_deg { deg = 360.0 -. (1.0 /. 3600.0) }));
+    [%expect {|359°59′58.99999999993270″|}]
+
+  let%expect_test _ =
+    let d = to_deg { deg = 0; min = 0; sec = -1.0 } in
+    print_dms_expect (from_deg (normalize_deg d));
+    [%expect {|359°59′58.99999999993270″|}]
+
+  let%expect_test _ =
+    print_deg_expect { deg = -1.0 /. 3600.0 };
+    [%expect {|-0.000277777777777777777536843962°|}]
+
+  let%expect_test _ =
+    print_deg_expect (to_deg { deg = 0; min = 0; sec = -1.0 });
+    [%expect {|-0.000277777777777777777536843962°|}]
+
+  let%expect_test _ =
+    print_deg_expect (normalize_deg { deg = -1.0 /. 3600.0 });
+    [%expect {|359.999722222222203527053352445364°|}]
+
+  let%expect_test _ =
+    print_deg_expect (normalize_deg { deg = 360.0 -. (1.0 /. 3600.0) });
+    [%expect {|359.999722222222203527053352445364°|}]
+
+  let%expect_test _ =
+    let d = to_deg { deg = 0; min = 0; sec = 60.0 } in
+    Printf.printf "%.30f\n" (d.deg *. 3600.0);
+    [%expect {|60.000000000000000000000000000000|}]
+
+  let%expect_test _ =
+    let d = to_deg { deg = 0; min = 0; sec = 61.0 } in
+    Printf.printf "%.30f\n" (d.deg *. 3600.0);
+    [%expect {|61.000000000000007105427357601002|}]
+
+  let%expect_test _ =
+    let d = to_deg { deg = 0; min = 1; sec = 1.0 } in
+    Printf.printf "%.30f\n" (d.deg *. 3600.0);
+    [%expect {|61.000000000000007105427357601002|}]
+
+  let%expect_test _ =
+    let d = to_deg { deg = 0; min = 0; sec = 1.0 } in
+    Printf.printf "%.30f\n" (d.deg *. 3600.0);
+    [%expect {|1.000000000000000000000000000000|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 0; min = 0; sec = 60.0 });
+    [%expect {|0°1′0.00000000000000″|}]
+
+  let%expect_test _ =
+    print_dms_expect (normalize_dms { deg = 0; min = 60; sec = 0.0 });
+    [%expect {|1°0′0.00000000000000″|}]
 end
