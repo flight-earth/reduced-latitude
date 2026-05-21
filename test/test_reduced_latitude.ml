@@ -22,8 +22,7 @@ let%expect_test "to_deg examples" =
   let d1 : D.dms = { deg = 289; min = 30; sec = 0.0 } in
   Printf.printf "%.12f\n" (D.to_deg d0).deg;
   Printf.printf "%.12f\n" (D.to_deg d1).deg;
-  [%expect
-    {|
+  [%expect {|
     0.000000000000
     289.500000000000
     |}]
@@ -46,10 +45,20 @@ let%expect_test "normalize and plus-minus" =
     |}]
 
 let%expect_test "diff_dms cases" =
-  print_dms (D.diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
-  print_dms (D.diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 90; min = 0; sec = 0.0 });
-  print_dms (D.diff_dms { deg = 90; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
-  print_dms (D.diff_dms { deg = 270; min = 0; sec = 0.0 } { deg = -90; min = 0; sec = 0.0 });
+  print_dms
+    (D.diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
+  print_dms
+    (D.diff_dms
+       { deg = 0; min = 0; sec = 0.0 }
+       { deg = 90; min = 0; sec = 0.0 });
+  print_dms
+    (D.diff_dms
+       { deg = 90; min = 0; sec = 0.0 }
+       { deg = 0; min = 0; sec = 0.0 });
+  print_dms
+    (D.diff_dms
+       { deg = 270; min = 0; sec = 0.0 }
+       { deg = -90; min = 0; sec = 0.0 });
   print_dms
     (D.diff_dms
        { deg = 95; min = 27; sec = 59.63089 }
@@ -69,11 +78,26 @@ let%expect_test "diff_dms cases" =
     |}]
 
 let%expect_test "abs_diff_dms cases" =
-  print_dms (D.abs_diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
-  print_dms (D.abs_diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 90; min = 0; sec = 0.0 });
-  print_dms (D.abs_diff_dms { deg = 90; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
-  print_dms (D.abs_diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 181; min = 0; sec = 0.0 });
-  print_dms (D.abs_diff_dms { deg = 181; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
+  print_dms
+    (D.abs_diff_dms
+       { deg = 0; min = 0; sec = 0.0 }
+       { deg = 0; min = 0; sec = 0.0 });
+  print_dms
+    (D.abs_diff_dms
+       { deg = 0; min = 0; sec = 0.0 }
+       { deg = 90; min = 0; sec = 0.0 });
+  print_dms
+    (D.abs_diff_dms
+       { deg = 90; min = 0; sec = 0.0 }
+       { deg = 0; min = 0; sec = 0.0 });
+  print_dms
+    (D.abs_diff_dms
+       { deg = 0; min = 0; sec = 0.0 }
+       { deg = 181; min = 0; sec = 0.0 });
+  print_dms
+    (D.abs_diff_dms
+       { deg = 181; min = 0; sec = 0.0 }
+       { deg = 0; min = 0; sec = 0.0 });
   [%expect
     {|
     0°0′0.00000000000000″

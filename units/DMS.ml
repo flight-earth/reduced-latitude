@@ -1,12 +1,7 @@
 module DMS = struct
   type deg = { deg : Convert.Convert.deg }
   type rad = { rad : Convert.Convert.rad }
-
-  type dms = {
-    deg : int;
-    min : int;
-    sec : float;
-  }
+  type dms = { deg : int; min : int; sec : float }
 
   let from_rad (r : rad) : deg = { deg = Convert.Convert.rad_to_deg r.rad }
 
@@ -79,17 +74,11 @@ module DMS = struct
   let normalize_dms (x : dms) : dms = from_deg (normalize_deg (to_deg x))
 
   let display_dms (x : dms) : string =
-    string_of_int x.deg
-    ^ "°"
-    ^ string_of_int x.min
-    ^ "′"
-    ^ string_of_float x.sec
-    ^ "″"
+    string_of_int x.deg ^ "°" ^ string_of_int x.min ^ "′"
+    ^ string_of_float x.sec ^ "″"
 
   let diff_dms (x : dms) (y : dms) : dms =
-    from_deg
-      (normalize_deg
-         { deg = (to_deg y).deg -. (to_deg x).deg })
+    from_deg (normalize_deg { deg = (to_deg y).deg -. (to_deg x).deg })
 
   let abs_diff_dms (y : dms) (x : dms) : dms =
     let d = diff_dms y x in
@@ -186,7 +175,8 @@ module DMS = struct
     [%expect {|359°59′58.99999999993270″|}]
 
   let%expect_test _ =
-    print_dms_expect (from_deg (normalize_deg { deg = 360.0 -. (1.0 /. 3600.0) }));
+    print_dms_expect
+      (from_deg (normalize_deg { deg = 360.0 -. (1.0 /. 3600.0) }));
     [%expect {|359°59′58.99999999993270″|}]
 
   let%expect_test _ =

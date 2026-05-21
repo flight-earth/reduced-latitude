@@ -1,4 +1,5 @@
 (library
  (name Units)
- (preprocess (pps ppx_expect))
+ (preprocess
+  (pps ppx_expect))
  (inline_tests))
