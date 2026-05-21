@@ -44,3 +44,41 @@ let%expect_test "normalize and plus-minus" =
     -179°0′0.00000000000000″
     none
     |}]
+
+let%expect_test "diff_dms cases" =
+  print_dms (D.diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
+  print_dms (D.diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 90; min = 0; sec = 0.0 });
+  print_dms (D.diff_dms { deg = 90; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
+  print_dms (D.diff_dms { deg = 270; min = 0; sec = 0.0 } { deg = -90; min = 0; sec = 0.0 });
+  print_dms
+    (D.diff_dms
+       { deg = 95; min = 27; sec = 59.63089 }
+       { deg = -95; min = 28; sec = 0.3691116037646225 });
+  print_dms
+    (D.diff_dms
+       { deg = -95; min = 28; sec = 0.3691116037646225 }
+       { deg = 95; min = 27; sec = 59.63089 });
+  [%expect
+    {|
+    0°0′0.00000000000000″
+    90°0′0.00000000000000″
+    270°0′0.00000000000000″
+    360°0′0.00000000000000″
+    169°3′59.99999839625161″
+    190°56′0.00000160374839″
+    |}]
+
+let%expect_test "abs_diff_dms cases" =
+  print_dms (D.abs_diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
+  print_dms (D.abs_diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 90; min = 0; sec = 0.0 });
+  print_dms (D.abs_diff_dms { deg = 90; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
+  print_dms (D.abs_diff_dms { deg = 0; min = 0; sec = 0.0 } { deg = 181; min = 0; sec = 0.0 });
+  print_dms (D.abs_diff_dms { deg = 181; min = 0; sec = 0.0 } { deg = 0; min = 0; sec = 0.0 });
+  [%expect
+    {|
+    0°0′0.00000000000000″
+    90°0′0.00000000000000″
+    270°0′0.00000000000000″
+    181°0′0.00000000000000″
+    179°0′0.00000000000000″
+    |}]
