@@ -19,7 +19,9 @@
  (name reduced-latitude)
  (synopsis "Geodesy problems and their solutions")
  (description "Solutions to the direct or forward and inverse or reverse geodesy problems, using Haversines and Vincenty's method.")
- (depends ocaml)
+ (depends
+  ocaml
+  ppx_expect)
  (tags
   ("earth" "geodesy" "ellipsoid" "haversines" "Vincenty" "latitude" "longitude" "azimuth" "distance")))
 

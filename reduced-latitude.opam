@@ -23,6 +23,7 @@ bug-reports: "https://github.com/flight-earth/reduced-latitude/issues"
 depends: [
   "dune" {>= "3.23"}
   "ocaml"
+  "ppx_expect"
   "odoc" {with-doc}
 ]
 build: [
