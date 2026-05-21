@@ -122,4 +122,9 @@ module DMS = struct
 
   let abs_diff_dms_180 (y : dms) : dms -> dms =
     abs_diff_dms (rotate { deg = 180; min = 0; sec = 0.0 } y)
+
+  let%expect_test _ =
+    let x = from_deg { deg = -169.06666666622118 } in
+    Printf.printf "%d°%d′%.14f″\n" x.deg x.min x.sec;
+    [%expect {|-169°3′59.99999839625161″|}]
 end
