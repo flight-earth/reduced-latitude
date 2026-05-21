@@ -1,4 +1,4 @@
-module type Angle = sig
+module type S = sig
   type t
 
   val normalize : t -> t

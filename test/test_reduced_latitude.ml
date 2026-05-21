@@ -1,4 +1,4 @@
-module D = Units.DMS.DMS
+module D = Units.DMS
 
 let print_dms (x : D.dms) = Printf.printf "%d°%d′%.14f″\n" x.deg x.min x.sec
 
