@@ -13,7 +13,6 @@ module Convert = struct
 
   (* SEE: https://doc.rust-lang.org/std/f64/consts/constant.PI.html *)
   let pi = 3.14159265358979323846264338327950288
-
   let deg_to_rad (x : deg) : rad = x *. pi /. 180.0
   let rad_to_deg (x : rad) : deg = x /. pi *. 180.0
 
