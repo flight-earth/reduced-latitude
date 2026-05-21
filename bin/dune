@@ -1,4 +1,4 @@
 (executable
  (public_name reduced-latitude)
  (name main)
- (libraries reduced_latitude))
+ (libraries Units reduced_latitude))
