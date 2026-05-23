@@ -1,10 +1,10 @@
-module D = Units.DMS
+open Units.DMS
 module P = Geodesy.Problems
 module V = Geodesy.PointToPoint.Vincenty
 module V75 = Geodesy.Published.Vincenty1975
 
 let%expect_test "vincenty 1975 published cases (all)" =
-  let az_tol_deg = (D.to_deg V75.az_tolerance).deg in
+  let az_tol_deg = (to_deg V75.az_tolerance).deg in
   let rec loop i ellipsoids probs solns dist_tols =
     match (ellipsoids, probs, solns, dist_tols) with
     | e :: es, p :: ps, s :: ss, t :: ts ->
@@ -18,21 +18,21 @@ let%expect_test "vincenty 1975 published cases (all)" =
         (match V.inverse e P.default_geodetic_accuracy p with
         | P.Geodetic_inverse sol -> (
             let az1_d =
-              D.abs_diff_dms
-                (D.from_deg (D.from_rad { D.rad = sol.az1.az }))
-                (D.from_deg (D.from_rad { D.rad = s.P.az1.P.az }))
+              abs_diff_dms
+                (from_deg (from_rad { rad = sol.az1.az }))
+                (from_deg (from_rad { rad = s.P.az1.P.az }))
             in
             Printf.printf "case%d az1_delta_deg=%.9f tol_deg=%.9f\n" i
-              (D.to_deg az1_d).deg az_tol_deg;
+              (to_deg az1_d).deg az_tol_deg;
             match (sol.P.az2, s.P.az2) with
             | Some got, Some exp ->
                 let az2_d =
-                  D.abs_diff_dms_180
-                    (D.from_deg (D.from_rad { D.rad = got.az }))
-                    (D.from_deg (D.from_rad { D.rad = exp.az }))
+                  abs_diff_dms_180
+                    (from_deg (from_rad { rad = got.az }))
+                    (from_deg (from_rad { rad = exp.az }))
                 in
                 Printf.printf "case%d az2_delta_deg=%.9f tol_deg=%.9f\n" i
-                  (D.to_deg az2_d).deg az_tol_deg
+                  (to_deg az2_d).deg az_tol_deg
             | _ -> Printf.printf "case%d az2_missing\n" i)
         | P.Geodetic_inverse_antipodal ->
             Printf.printf "case%d inverse=antipodal\n" i
