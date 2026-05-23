@@ -1,6 +1,6 @@
 (library
  (name test_reduced_latitude)
- (libraries Units Earth ppx_expect)
+ (libraries Units Earth Latlng Geodesy ppx_expect)
  (preprocess
   (pps ppx_expect))
  (inline_tests))
