@@ -1,19 +1,14 @@
-module D = Units.DMS
+open Units.Convert
+open Units.DMS
 module H = Geodesy.Haversines
-module L = Latlng.LatLng
-module P = Geodesy.Problems
+open Latlng
+open Geodesy.Problems
 
-let london : L.t =
-  {
-    lat = { D.rad = Units.Convert.deg_to_rad 51.5007 };
-    lng = { D.rad = Units.Convert.deg_to_rad (-0.1246) };
-  }
+let london : LatLng.t =
+  { lat = { rad = deg_to_rad 51.5007 }; lng = { rad = deg_to_rad (-0.1246) } }
 
-let newyork : L.t =
-  {
-    lat = { D.rad = Units.Convert.deg_to_rad 40.6892 };
-    lng = { D.rad = Units.Convert.deg_to_rad (-74.0445) };
-  }
+let newyork : LatLng.t =
+  { lat = { rad = deg_to_rad 40.6892 }; lng = { rad = deg_to_rad (-74.0445) } }
 
 let%expect_test "haversines london newyork distance" =
   let d = H.distance london newyork in
@@ -21,7 +16,7 @@ let%expect_test "haversines london newyork distance" =
   [%expect {|5574840.456848554313|}]
 
 let%expect_test "haversines london newyork inverse" =
-  let inv : P.inverse_solution = H.inverse { x = london; y = newyork } in
+  let inv : inverse_solution = H.inverse { x = london; y = newyork } in
   Printf.printf "s=%.12f\n" inv.s.dist;
   Printf.printf "az1=%.15f\n" inv.az1.az;
   (match inv.az2 with
